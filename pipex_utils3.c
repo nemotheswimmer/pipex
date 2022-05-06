@@ -22,11 +22,36 @@ char	*get_full_path(char *cmd, char **paths)
 	return (NULL);
 }
 
-void	wait_children(t_childlist *childlist)
+void	free_child(t_childlist **childlist)
 {
-	while (childlist)
+	char	**str;
+
+	str = (*childlist)->command;
+	while (*str)
 	{
-		waitpid(childlist->pid, NULL, 0);
-		childlist = childlist->next;
+		free(*str);
+		str++;
+	}
+	free(*childlist);
+}
+
+/* do 3 things:
+** 1) wait child process in the order in the list,
+** 1-1) close fd read by the process,
+** 1-2) free the node (include char **command)
+*/
+void	wait_children(t_childlist **childlist)
+{
+	t_childlist	*curr;
+	t_childlist	*temp;
+
+	curr = *childlist;
+	while (curr)
+	{
+		waitpid(curr->pid, NULL, 0);
+		close(curr->fd_read);
+		temp = curr->next;
+		free_child(&curr);
+		curr = temp;
 	}
 }

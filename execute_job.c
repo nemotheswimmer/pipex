@@ -30,6 +30,6 @@ int		execute_job(int argc, char **argv, char **paths)
 		curr->fd_read = file_fd[READ];
 		curr = curr->next;
 	}
-	wait_children(childlist);
+	wait_children(&childlist);
 	return (0);
 }

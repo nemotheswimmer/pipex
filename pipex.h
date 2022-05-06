@@ -36,7 +36,7 @@ void	reset_stdin(int *file_fd);
 void	reset_stdout(int *file_fd, int *pipe_fd, t_childlist *childlist);
 void	execute_cmd(char **cmd, char **paths);
 char	*get_full_path(char *cmd, char **paths);
-void	wait_children(t_childlist *childlist);
+void	wait_children(t_childlist **childlist);
 t_childlist	*lstlast(t_childlist *lst);
 void	lstadd_back_cmd(t_childlist **lst, t_childlist *new);
 t_childlist	*lstnew_cmd(char **command);
