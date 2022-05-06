@@ -22,6 +22,9 @@ char	*get_full_path(char *cmd, char **paths)
 	return (NULL);
 }
 
+/* 1) free char **command
+** 2) free char *full_path
+*/
 void	free_child(t_childlist **childlist)
 {
 	char	**str;
@@ -32,6 +35,7 @@ void	free_child(t_childlist **childlist)
 		free(*str);
 		str++;
 	}
+	free((*childlist)->full_path);
 	free(*childlist);
 }
 

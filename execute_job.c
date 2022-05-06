@@ -1,15 +1,14 @@
 #include "pipex.h"
 
-int		execute_job(int argc, char **argv, char **paths)
+int		execute_job(int argc, char **argv, char **envp)
 {
-	int			pid;
 	int			file_fd[2];
 	int			pipe_fd[2];
 	t_childlist	*childlist;
 	t_childlist	*curr;
 
 	open_files(argc, argv, file_fd);
-	childlist = get_childlist(argc, argv);
+	childlist = get_childlist(argc, argv, envp); //fullpath구해놓고
 	curr = childlist;
 	while (curr)
 	{
@@ -20,7 +19,7 @@ int		execute_job(int argc, char **argv, char **paths)
 		{
 			reset_stdin(file_fd);
 			reset_stdout(file_fd, pipe_fd, curr);
-			execute_cmd(curr->command, paths);
+			execve_command(curr);
 		}
 		if (curr->next)
 		{

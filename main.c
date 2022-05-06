@@ -2,13 +2,9 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	**paths;
-
 	if (is_valid_argc(argc, argv))
 	{
-		paths = get_paths(envp);
-		execute_job(argc, argv, paths);
-		free_paths(paths);
+		execute_job(argc, argv, envp);
 	}
 	else
 	{

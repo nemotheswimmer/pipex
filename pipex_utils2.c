@@ -12,7 +12,7 @@ t_childlist	*lstlast(t_childlist *lst)
 	return (lst);
 }
 
-void	lstadd_back_cmd(t_childlist **lst, t_childlist *new)
+void	lstadd_back(t_childlist **lst, t_childlist *new)
 {
 	if (*lst == NULL)
 		*lst = new;
@@ -20,31 +20,37 @@ void	lstadd_back_cmd(t_childlist **lst, t_childlist *new)
 		lstlast(*lst)->next = new;
 }
 
-t_childlist	*lstnew_cmd(char **command)
+// t_childlist	*lstnew(char **command)
+t_childlist *lstnew(char *argvi, char **paths)
 {
 	t_childlist	*new;
 
 	new = ft_calloc(sizeof(t_childlist), 1);
-	new->command = command;
+	new->command = ft_split(argvi, ' ');
+	new->full_path = get_full_path((new->command)[0], paths);
 	return (new);
 }
 
 /* create childlist with one member(char **command) filled.
 ** other members are 0(blank) yet.
 */
-t_childlist	*get_childlist(int argc, char **argv)
+t_childlist	*get_childlist(int argc, char **argv, char **envp)
 {
 	int					i;
+	char				**paths;
 	t_childlist			*new;
 	static t_childlist	*childlist;
 
+	paths = get_paths(envp);
 	i = 2 + is_heredoc(argv[1]);
 	while (i < argc - 1)
 	{
-		new = lstnew_cmd(ft_split(argv[i], ' '));
-		lstadd_back_cmd(&childlist, new);
+		new = lstnew(argv[i], paths);
+		//new = lstnew_cmd(ft_split(argv[i], ' '));
+		lstadd_back(&childlist, new);
 		i++;
 	}
+	free_paths(paths);
 	return (childlist);
 }
 
@@ -73,18 +79,15 @@ void	reset_stdout(int *file_fd, int *pipe_fd, t_childlist *childlist)
 	}
 }
 
-void	execute_cmd(char **cmd, char **paths)
+void	execve_command(t_childlist *lst)
 {
-	char	*full_path;
-
-	full_path = get_full_path(cmd[0], paths);
-	if (full_path)
+	if (lst->full_path)
 	{
-		execve(full_path, cmd, NULL);
+		execve(lst->full_path, lst->command, NULL);
 	}
 	else
 	{
-		write(2, cmd[0], ft_strlen(cmd[0]));
+		write(2, (lst->command)[0], ft_strlen((lst->command)[0]));
 		write(2, ": command not found", 19);
 		exit(127);
 	}

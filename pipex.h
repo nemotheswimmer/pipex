@@ -19,6 +19,7 @@ extern int errno;
 typedef struct s_childlist
 {
 	char				**command;
+	char				*full_path;
 	int					pid;
 	int					fd_read;
 	struct s_childlist	*next;
@@ -34,13 +35,13 @@ bool	is_limiter(char *line, char *limiter);
 t_list	*get_cmdlist(int argc, char **argv);
 void	reset_stdin(int *file_fd);
 void	reset_stdout(int *file_fd, int *pipe_fd, t_childlist *childlist);
-void	execute_cmd(char **cmd, char **paths);
+void	execve_command(t_childlist *lst);
 char	*get_full_path(char *cmd, char **paths);
 void	wait_children(t_childlist **childlist);
 t_childlist	*lstlast(t_childlist *lst);
-void	lstadd_back_cmd(t_childlist **lst, t_childlist *new);
-t_childlist	*lstnew_cmd(char **command);
-t_childlist	*get_childlist(int argc, char **argv);
+void	lstadd_back(t_childlist **lst, t_childlist *new);
+t_childlist *lstnew(char *argvi, char **paths);
+t_childlist	*get_childlist(int argc, char **argv, char **envp);
 void	free_paths(char **paths);
 
 #endif
