@@ -8,7 +8,7 @@ int		execute_job(int argc, char **argv, char **envp)
 	t_childlist	*curr;
 
 	open_files(argc, argv, file_fd);
-	childlist = get_childlist(argc, argv, envp); //fullpath구해놓고
+	childlist = get_childlist(argc, argv, envp);
 	curr = childlist;
 	while (curr)
 	{
@@ -30,6 +30,9 @@ int		execute_job(int argc, char **argv, char **envp)
 		curr = curr->next;
 	}
 	wait_children(&childlist);
+	close(file_fd[READ]);
 	close(file_fd[WRITE]);
+	int fdd = open("afile", O_RDONLY | O_CREAT, 0444);
+	close(fdd);
 	return (0);
 }

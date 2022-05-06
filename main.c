@@ -11,5 +11,6 @@ int	main(int argc, char **argv, char **envp)
 		ft_putstr_fd("Error: bad arguments", 2);
 		return (0);
 	}
-	//system("leaks a.out");
+	// system("leaks a.out");
+	while (1);
 }
