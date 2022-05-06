@@ -30,5 +30,6 @@ int		execute_job(int argc, char **argv, char **envp)
 		curr = curr->next;
 	}
 	wait_children(&childlist);
+	close(file_fd[WRITE]);
 	return (0);
 }
