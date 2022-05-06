@@ -5,15 +5,15 @@
 # include <unistd.h> // pipe(), dup2(), access(), execve(), fork()
 # include <sys/wait.h> //waitpid()
 # include <stdbool.h>
+#include <sys/errno.h> //errno
+#include <string.h> //strerror()
+#include <stdio.h> //printf
 # include "../libft/libft.h"
 # include "../get_next_line/get_next_line.h"
+
 # define READ 0
 # define WRITE 1
 
-/* temp*/
-#include <sys/errno.h>
-#include <string.h>
-#include <stdio.h>
 extern int errno;
 
 typedef struct s_childlist
@@ -41,5 +41,6 @@ t_childlist	*lstlast(t_childlist *lst);
 void	lstadd_back_cmd(t_childlist **lst, t_childlist *new);
 t_childlist	*lstnew_cmd(char **command);
 t_childlist	*get_childlist(int argc, char **argv);
+void	free_paths(char **paths);
 
 #endif

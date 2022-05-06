@@ -55,3 +55,12 @@ void	wait_children(t_childlist **childlist)
 		curr = temp;
 	}
 }
+
+void	free_paths(char **paths)
+{
+	while (*paths)
+	{
+		free(*paths);
+		paths++;
+	}
+}
