@@ -5,30 +5,8 @@ bool	is_limiter(char *line, char *limiter)
 	return (!ft_strncmp(line, limiter, ft_strlen(limiter) + 1));
 }
 
-/* set an index start from command argument(non-heredoc: 2, heredoc: 3),
-** and split each string before get it(i.e. "ls" "-l" "a").
-** to be used on second parameter of execve().
-*/
-// t_list	*get_cmdlist(int argc, char **argv)
-// {
-// 	int				i;
-// 	t_list			*new;
-// 	static t_list	*cmdlist;
-
-// 	i = 2 + is_heredoc(argv[1]);
-// 	while (i < argc - 1)
-// 	{
-// 		new = ft_lstnew(ft_split(argv[i], ' '));
-// 		ft_lstadd_back(&cmdlist, new);
-// 		i++;
-// 	}
-// 	return (cmdlist);
-// }
-
 t_childlist	*lstlast(t_childlist *lst)
 {
-	if (lst == NULL)
-		return (NULL);
 	while (lst->next)
 		lst = lst->next;
 	return (lst);
@@ -36,8 +14,6 @@ t_childlist	*lstlast(t_childlist *lst)
 
 void	lstadd_back_cmd(t_childlist **lst, t_childlist *new)
 {
-	if (lst == NULL || new == NULL)
-		return ;
 	if (*lst == NULL)
 		*lst = new;
 	else
@@ -53,6 +29,9 @@ t_childlist	*lstnew_cmd(char **command)
 	return (new);
 }
 
+/* create childlist with one member(char **command) filled.
+** other members are 0(blank) yet.
+*/
 t_childlist	*get_childlist(int argc, char **argv)
 {
 	int					i;

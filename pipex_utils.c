@@ -46,11 +46,10 @@ void	open_files(int argc, char **argv, int *file_fd)
 	}
 	else
 	{
-		file_fd[READ] = open(argv[1], O_RDONLY);
+		file_fd[READ] = open(argv[1], O_RDONLY, 0444);
 		if (file_fd[READ] == -1)
 		{
-			write(2, argv[1], ft_strlen(argv[1]));
-			write(2, ": no such file or directory", 27);
+			printf("%s\n", strerror(errno));
 		}
 		file_fd[WRITE] = open(argv[argc - 1], O_WRONLY | O_CREAT, 0644);
 	}
@@ -59,9 +58,8 @@ void	open_files(int argc, char **argv, int *file_fd)
 int	get_stdin_newfd(char *limiter)
 {
 	int		pipe_fd[2];
-	char	*line;
 	int		pid;
-	int		status;
+	char	*line;
 
 	pipe(pipe_fd);
 	pid = fork();
@@ -81,7 +79,7 @@ int	get_stdin_newfd(char *limiter)
 	else
 	{
 		close(pipe_fd[WRITE]);
-		wait(&status);
+		wait(NULL);
 		return (pipe_fd[READ]);
 	}
 }

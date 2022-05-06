@@ -10,6 +10,12 @@
 # define READ 0
 # define WRITE 1
 
+/* temp*/
+#include <sys/errno.h>
+#include <string.h>
+#include <stdio.h>
+extern int errno;
+
 typedef struct s_childlist
 {
 	char				**command;
