@@ -27,6 +27,7 @@ int		execute_job(int argc, char **argv, char **paths)
 		close(pipe_fd[WRITE]);
 		file_fd[READ] = pipe_fd[READ];
 		}
+		curr->fd_read = file_fd[READ];
 		curr = curr->next;
 	}
 	wait_children(childlist);
