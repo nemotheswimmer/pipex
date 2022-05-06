@@ -70,7 +70,7 @@ int	get_stdin_newfd(char *limiter)
 		close(pipe_fd[READ]);
 		while (1)
 		{
-			write(2, "heredoc> ", 9);
+			write(2, "> ", 2);
 			line = get_next_line(STDIN_FILENO);
 			if (is_limiter(line, limiter))
 				exit(0);

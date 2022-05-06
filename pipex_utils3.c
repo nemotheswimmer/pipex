@@ -22,22 +22,11 @@ char	*get_full_path(char *cmd, char **paths)
 	return (NULL);
 }
 
-void	lstadd_child(t_list_int **childlist, int content)
+void	wait_children(t_childlist *childlist)
 {
-	t_list_int	*new;
-
-	new = ft_lstnew_int(content);
-	ft_lstadd_back_int(childlist, new);
-}
-
-int	wait_children(t_list_int *childlist)
-{
-	int	status;
-
 	while (childlist)
 	{
-		waitpid(childlist->content, &status, 0);
+		waitpid(childlist->pid, NULL, 0);
 		childlist = childlist->next;
 	}
-	return (status);
 }
