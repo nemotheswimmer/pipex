@@ -1,6 +1,6 @@
 #include "pipex.h"
 
-int		execute_job(int argc, char **argv, char **envp)
+int	execute_job(int argc, char **argv, char **envp)
 {
 	int			file_fd[2];
 	int			pipe_fd[2];
@@ -12,25 +12,31 @@ int		execute_job(int argc, char **argv, char **envp)
 	child = childlist;
 	while (child)
 	{
-		if (child->next)
-			pipe(pipe_fd);
-		child->pid = fork();
-		if (!(child->pid))
-		{
-			reset_stdin(file_fd);
-			reset_stdout(file_fd, pipe_fd, child);
-			execve_command(child);
-		}
-		close(file_fd[READ]);
-		if (child->next)
-		{
-			file_fd[READ] = pipe_fd[READ];
-			close(pipe_fd[WRITE]);
-		}
-		else
-			close(file_fd[WRITE]);
+		fork_process(pipe_fd, child);
+		if (child->pid == 0)
+			child_process(file_fd, pipe_fd, child);
+		parent_process(file_fd, pipe_fd, child);
 		child = child->next;
 	}
-	wait_children(childlist);
+	parent_wait_children(childlist);
 	return (0);
+}
+
+void	fork_process(int *pipe_fd, t_childlist *child)
+{
+	if (child->next)
+			pipe(pipe_fd);
+	child->pid = fork();
+}
+
+void	parent_process(int *file_fd, int *pipe_fd, t_childlist *child)
+{
+	close(file_fd[READ]);
+	if (child->next)
+	{
+		file_fd[READ] = pipe_fd[READ];
+		close(pipe_fd[WRITE]);
+	}
+	else
+		close(file_fd[WRITE]);
 }

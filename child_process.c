@@ -1,0 +1,47 @@
+#include "pipex.h"
+
+void	child_process(int *file_fd, int *pipe_fd, t_childlist *child)
+{
+	reset_stdin(file_fd);
+	reset_stdout(file_fd, pipe_fd, child);
+	execve_command(child);
+}
+
+void	reset_stdin(int *file_fd)
+{
+	dup2(file_fd[READ], STDIN_FILENO);
+	close(file_fd[READ]);
+}
+
+/* if this is last process to execute,
+** write to the outfile we opened,
+** not one a pipe(there's no pipe_fd this time).
+*/
+void	reset_stdout(int *file_fd, int *pipe_fd, t_childlist *child)
+{
+	if (child->next)
+	{
+		close(pipe_fd[READ]);
+		dup2(pipe_fd[WRITE], STDOUT_FILENO);
+		close(pipe_fd[WRITE]);
+	}
+	else
+	{
+		dup2(file_fd[WRITE], STDOUT_FILENO);
+		close(file_fd[WRITE]);
+	}
+}
+
+void	execve_command(t_childlist *lst)
+{
+	if (lst->full_path)
+	{
+		execve(lst->full_path, lst->command, NULL);
+	}
+	else
+	{
+		write(2, (lst->command)[0], ft_strlen((lst->command)[0]));
+		write(2, ": command not found\n", 21);
+		exit(127);
+	}
+}

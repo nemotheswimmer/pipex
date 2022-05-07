@@ -11,75 +11,38 @@ bool	is_heredoc(const char *argv1)
 	return (!ft_strncmp(argv1, "here_doc", 9));
 }
 
-char	**get_paths(char **envp)
+/* single line comes with newline,
+** and we have to pretend it doesn't have new line.
+** still we have to put the content with newline to file.
+*/
+bool	is_limiter(char *line, char *limiter)
 {
-	int		i;
-	char	*temp;
-	char	**paths;
+	int	n;
+	int	i;
 
+	n = ft_strlen(line) - 1;
 	i = 0;
-	while (envp[i])
+	while (i < n)
 	{
-		if (ft_strnstr(envp[i], "PATH=", 5))
-			break ;
+		if (line[i] != limiter[i])
+			return (false);
 		else
 			i++;
 	}
-	paths = ft_split(envp[i] + 5, ':');
+	if (limiter[i])
+		return (false);
+	return (true);
+}
+
+void	free_twoarr(char **arr)
+{
+	size_t	i;
+
 	i = 0;
-	while (paths[i])
+	while (arr[i])
 	{
-		temp = paths[i];
-		paths[i] = ft_strjoin(paths[i], "/");
-		free(temp);
-		i++;
+		free(arr[i]);
+		++i;
 	}
-	return (paths);
-}
-
-void	open_files(int argc, char **argv, int *file_fd)
-{
-	if (is_heredoc(argv[1]))
-	{
-		file_fd[READ] = get_stdin_newfd(argv[2]);
-		file_fd[WRITE] = open(argv[argc - 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
-	}
-	else
-	{
-		file_fd[READ] = open(argv[1], O_RDONLY, 0444);
-		if (file_fd[READ] == -1)
-		{
-			printf("%s\n", strerror(errno));
-		}
-		file_fd[WRITE] = open(argv[argc - 1], O_WRONLY | O_CREAT, 0644);
-	}
-}
-
-int	get_stdin_newfd(char *limiter)
-{
-	int		pipe_fd[2];
-	int		pid;
-	char	*line;
-
-	pipe(pipe_fd);
-	pid = fork();
-	if (!pid)
-	{
-		close(pipe_fd[READ]);
-		while (1)
-		{
-			write(2, "> ", 2);
-			line = get_next_line(STDIN_FILENO);
-			if (is_limiter(line, limiter))
-				exit(0);
-			else
-				write(pipe_fd[WRITE], line, ft_strlen(line));
-		}
-	}
-	else
-	{
-		close(pipe_fd[WRITE]);
-		wait(NULL);
-		return (pipe_fd[READ]);
-	}
+	free(arr);
 }
