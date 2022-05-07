@@ -5,34 +5,32 @@ int		execute_job(int argc, char **argv, char **envp)
 	int			file_fd[2];
 	int			pipe_fd[2];
 	t_childlist	*childlist;
-	t_childlist	*curr;
+	t_childlist	*child;
 
 	open_files(argc, argv, file_fd);
 	childlist = get_childlist(argc, argv, envp);
-	curr = childlist;
-	while (curr)
+	child = childlist;
+	while (child)
 	{
-		if (curr->next)
+		if (child->next)
 			pipe(pipe_fd);
-		curr->pid = fork();
-		if (!(curr->pid))
+		child->pid = fork();
+		if (!(child->pid))
 		{
 			reset_stdin(file_fd);
-			reset_stdout(file_fd, pipe_fd, curr);
-			execve_command(curr);
+			reset_stdout(file_fd, pipe_fd, child);
+			execve_command(child);
 		}
-		if (curr->next)
+		close(file_fd[READ]);
+		if (child->next)
 		{
-		close(pipe_fd[WRITE]);
-		file_fd[READ] = pipe_fd[READ];
+			file_fd[READ] = pipe_fd[READ];
+			close(pipe_fd[WRITE]);
 		}
-		curr->fd_read = file_fd[READ];
-		curr = curr->next;
+		else
+			close(file_fd[WRITE]);
+		child = child->next;
 	}
-	wait_children(&childlist);
-	close(file_fd[READ]);
-	close(file_fd[WRITE]);
-	int fdd = open("afile", O_RDONLY | O_CREAT, 0444);
-	close(fdd);
+	wait_children(childlist);
 	return (0);
 }

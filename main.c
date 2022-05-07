@@ -8,9 +8,7 @@ int	main(int argc, char **argv, char **envp)
 	}
 	else
 	{
-		ft_putstr_fd("Error: bad arguments", 2);
+		write(2, "Error: bad arguments\n", 22);
 		return (0);
 	}
-	// system("leaks a.out");
-	while (1);
 }

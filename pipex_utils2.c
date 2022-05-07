@@ -1,8 +1,26 @@
 #include "pipex.h"
 
+/* single line comes with newline,
+** and we have to pretend it doesn't have new line.
+** still we have to put the content with newline to file.
+*/
 bool	is_limiter(char *line, char *limiter)
 {
-	return (!ft_strncmp(line, limiter, ft_strlen(limiter) + 1));
+	int	n;
+	int	i;
+
+	n = ft_strlen(line) - 1;
+	i = 0;
+	while (i < n)
+	{
+		if (line[i] != limiter[i])
+			return (false);
+		else
+			i++;
+	}
+	if (limiter[i])
+		return (false);
+	return (true);
 }
 
 t_childlist	*lstlast(t_childlist *lst)
@@ -20,7 +38,6 @@ void	lstadd_back(t_childlist **lst, t_childlist *new)
 		lstlast(*lst)->next = new;
 }
 
-// t_childlist	*lstnew(char **command)
 t_childlist *lstnew(char *argvi, char **paths)
 {
 	t_childlist	*new;
@@ -46,11 +63,10 @@ t_childlist	*get_childlist(int argc, char **argv, char **envp)
 	while (i < argc - 1)
 	{
 		new = lstnew(argv[i], paths);
-		//new = lstnew_cmd(ft_split(argv[i], ' '));
 		lstadd_back(&childlist, new);
 		i++;
 	}
-	free_paths(paths);
+	free_twoarr(paths);
 	return (childlist);
 }
 
@@ -88,7 +104,7 @@ void	execve_command(t_childlist *lst)
 	else
 	{
 		write(2, (lst->command)[0], ft_strlen((lst->command)[0]));
-		write(2, ": command not found", 19);
+		write(2, ": command not found\n", 21);
 		exit(127);
 	}
 }

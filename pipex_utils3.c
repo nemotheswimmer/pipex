@@ -25,18 +25,11 @@ char	*get_full_path(char *cmd, char **paths)
 /* 1) free char **command
 ** 2) free char *full_path
 */
-void	free_child(t_childlist **childlist)
+void	free_child(t_childlist *node)
 {
-	char	**str;
-
-	str = (*childlist)->command;
-	while (*str)
-	{
-		free(*str);
-		str++;
-	}
-	free((*childlist)->full_path);
-	free(*childlist);
+	free_twoarr(node->command);
+	free(node->full_path);
+	free(node);
 }
 
 /* do 3 things:
@@ -44,27 +37,30 @@ void	free_child(t_childlist **childlist)
 ** 1-1) close fd read by the process,
 ** 1-2) free the node (include char **command)
 */
-void	wait_children(t_childlist **childlist)
+void	wait_children(t_childlist *childlist)
 {
-	t_childlist	*curr;
+	t_childlist	*child;
 	t_childlist	*temp;
 
-	curr = *childlist;
-	while (curr)
+	child = childlist;
+	while (child)
 	{
-		waitpid(curr->pid, NULL, 0);
-		close(curr->fd_read);
-		temp = curr->next;
-		free_child(&curr);
-		curr = temp;
+		waitpid(child->pid, NULL, 0);
+		temp = child->next;
+		free_child(child);
+		child = temp;
 	}
 }
 
-void	free_paths(char **paths)
+void	free_twoarr(char **arr)
 {
-	while (*paths)
+	size_t	i;
+
+	i = 0;
+	while (arr[i])
 	{
-		free(*paths);
-		paths++;
+		free(arr[i]);
+		++i;
 	}
+	free(arr);
 }
