@@ -48,7 +48,7 @@ char	**get_paths(char **envp)
 	return (paths);
 }
 
-t_childlist *lstnew(char *argvi, char **paths)
+t_childlist	*lstnew(char *argvi, char **paths)
 {
 	t_childlist	*new;
 

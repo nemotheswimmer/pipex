@@ -5,7 +5,8 @@ void	open_files(int argc, char **argv, int *file_fd)
 	if (is_heredoc(argv[1]))
 	{
 		file_fd[READ] = get_stdin_newfd(argv[2]);
-		file_fd[WRITE] = open(argv[argc - 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
+		file_fd[WRITE] = open(argv[argc - 1],
+				O_WRONLY | O_CREAT | O_APPEND, 0644);
 	}
 	else
 	{

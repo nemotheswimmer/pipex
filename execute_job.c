@@ -25,7 +25,7 @@ int	execute_job(int argc, char **argv, char **envp)
 void	fork_process(int *pipe_fd, t_childlist *child)
 {
 	if (child->next)
-			pipe(pipe_fd);
+		pipe(pipe_fd);
 	child->pid = fork();
 }
 

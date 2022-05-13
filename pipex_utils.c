@@ -2,7 +2,7 @@
 
 bool	is_valid_argc(int argc, char **argv)
 {
-	return((argc >= 5 && !is_heredoc(argv[1]))
+	return ((argc >= 5 && !is_heredoc(argv[1]))
 		|| (argc >= 6 && is_heredoc(argv[1])));
 }
 

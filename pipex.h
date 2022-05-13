@@ -1,20 +1,16 @@
 #ifndef PIPEX_H
 # define PIPEX_H
 
-# include <fcntl.h> //open()
-# include <unistd.h> // pipe(), dup2(), access(), execve(), fork()
-# include <sys/wait.h> //waitpid()
+# include <fcntl.h>
+# include <unistd.h>
+# include <sys/wait.h>
 # include <stdbool.h>
-# include <sys/errno.h> //errno
-# include <string.h> //strerror()
 # include <stdio.h>
-# include "../libft/libft.h"
-# include "../get_next_line/get_next_line.h"
+# include "../libft/include/libft.h"
+# include "../libft/include/get_next_line.h"
 
 # define READ 0
 # define WRITE 1
-
-extern int errno;
 
 typedef struct s_childlist
 {
@@ -29,7 +25,7 @@ void		open_files(int argc, char **argv, int *file_fd);
 int			get_stdin_newfd(char *limiter);
 t_childlist	*get_childlist(int argc, char **argv, char **envp);
 char		**get_paths(char **envp);
-t_childlist *lstnew(char *argvi, char **paths);
+t_childlist	*lstnew(char *argvi, char **paths);
 char		*get_full_path(char *cmd, char **paths);
 void		lstadd_back(t_childlist **lst, t_childlist *new);
 void		fork_process(int *pipe_fd, t_childlist *child);
