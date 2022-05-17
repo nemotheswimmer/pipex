@@ -31,7 +31,7 @@ void		reset_stdin(int *file_fd);
 void		reset_stdout(int *file_fd, int *pipe_fd, t_childlist *child);
 void		execve_command(t_childlist *child);
 void		parent_process(int *file_fd, int *pipe_fd, t_childlist *child);
-void		parent_wait_children(t_childlist *childlist);
+void		wait_children(t_childlist *childlist);
 void		free_child(t_childlist *child);
 void		free_twoarr(char **arr);
 

@@ -11,14 +11,14 @@ bool	is_heredoc(const char *argv1)
 	return (!ft_strncmp(argv1, "here_doc", 9));
 }
 
-/* single line comes with newline,
-** and we have to pretend it doesn't have new line.
-** still we have to put the content with newline to file.
+/* is_limiter():
+** line 23: The program pretends that [line] has no new line,
+** 			only to check if it is a [limiter].
 */
 bool	is_limiter(char *line, char *limiter)
 {
-	int	n;
-	int	i;
+	size_t	n;
+	size_t	i;
 
 	n = ft_strlen(line) - 1;
 	i = 0;

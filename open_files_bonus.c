@@ -1,7 +1,7 @@
 #include "pipex_bonus.h"
 
 /* open_files():
-** Heredoc reads from input instead of file.
+** line 10: Heredoc reads from input instead of file.
 */
 void	open_files(int argc, char **argv, int *file_fd)
 {
@@ -23,8 +23,8 @@ void	open_files(int argc, char **argv, int *file_fd)
 
 /* get_stdin_newfd():
 ** Heredoc reads from input and writes to the pipe.
-** Receive infinite input ending with newline, and write to the pipe.
-** When input is the same string as [limiter], child process is terminated.
+** line 40~43, 46~47: Receive infinite input ending with newline, and write to the pipe.
+** line 44~45: When input is the same string as [limiter], child process is terminated.
 */
 int	get_stdin_newfd(char *limiter)
 {

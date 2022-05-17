@@ -27,9 +27,9 @@ t_childlist	*get_childlist(int argc, char **argv, char **envp)
 
 /* get_paths():
 ** The envp array store the environment variables.
-** 1) Get "PATHS enviroment variables" from [envp].
-** 2) Split it with delimeiter ':'.
-** 3) Add a slash(/) to each string.
+** line 42~49: Get "PATHS enviroment variables" from [envp].
+** line 50: Split it with delimeiter ':'.
+** line 51~58: Add a slash(/) to each string.
 ** result like this:
 ** {"/usr/local/bin/", "/usr/bin/", "/bin/", "/usr/sbin/", "/sbin/"}
 */
@@ -76,9 +76,10 @@ t_childlist	*lstnew(char *argvi, char **paths)
 }
 
 /* get_full_path():
-** Iterate through the [paths] array, until we finds an accessible path.
-** 1) Make a [full_path] temporarily.
-** 2) Check if it is an accessible path or not.
+** line 89: Iterate through the [paths] array,
+**  		until it finds an accessible path.
+** line 91: Make a [full_path] temporarily.
+** line 92: Check if it is an accessible path or not.
 */
 char	*get_full_path(char *cmd, char **paths)
 {

@@ -1,6 +1,6 @@
 #include "pipex_bonus.h"
 
-void	parent_wait_children(t_childlist *childlist)
+void	wait_children(t_childlist *childlist)
 {
 	t_childlist	*child;
 	t_childlist	*temp;

@@ -30,7 +30,7 @@ int	main(int argc, char **argv, char **envp)
 			parent_process(file_fd, pipe_fd, child);
 			child = child->next;
 		}
-		parent_wait_children(childlist);
+		wait_children(childlist);
 	}
 	else
 		write(2, "Error: bad arguments\n", 22);
