@@ -1,9 +1,9 @@
 #include "pipex.h"
 
-/* do 3 things:
-** 1) wait child process in the order in the list,
-** 1-1) close fd read by the process,
-** 1-2) free the node (include char **command)
+/* parent_wait_children():
+** 1) While iterate the [childlist],
+** 2) wait every child process in the order in the list
+** 3) and free the node.
 */
 void	parent_wait_children(t_childlist *childlist)
 {
@@ -20,9 +20,6 @@ void	parent_wait_children(t_childlist *childlist)
 	}
 }
 
-/* 1) free char **command
-** 2) free char *full_path
-*/
 void	free_child(t_childlist *child)
 {
 	free_twoarr(child->command);
