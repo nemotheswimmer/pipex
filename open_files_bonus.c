@@ -1,12 +1,8 @@
 #include "pipex_bonus.h"
 
 /* open_files():
-** The actual shell opens all files at the first point.
-** The file to receive input is opened only when it exists,
-** and the file to be output is opened or newly created.
 ** Heredoc reads from input instead of file.
 */
-
 void	open_files(int argc, char **argv, int *file_fd)
 {
 	if (is_heredoc(argv[1]))

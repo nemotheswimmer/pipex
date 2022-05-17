@@ -17,15 +17,7 @@
 ** $> cmd << LIMITER | cmd1 >> file
 */
 
-/* main():
-** 1) Check if they are valid arguments.
-** 2) Open [file1] and [file2] and save fd to [file_fd].
-** 3) Create a childlist. the number of "list nodes == [cmd]s == child processes".
-** 4) The parent creates pipes and child processes while traversing the [childlist].
-** 5) Each child process executes its own command and exits.
-** 6) The parent process waits for every child process to terminate,
-**    and then deallocates each node.
-*/
+/* You can found detailed comments in non _bonus files. */
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -54,10 +46,6 @@ int	main(int argc, char **argv, char **envp)
 	return (0);
 }
 
-/* fork_process():
-** The child process will write the result to a pipe(a.k.a. pipe_fd[WRITE])
-** instead of displaying it to the terminal(a.k.a. fd 1).
-** That way the next child process can read instead of fd 0. */
 void	fork_process(int *pipe_fd, t_childlist *child)
 {
 	if (child->next)
@@ -65,12 +53,6 @@ void	fork_process(int *pipe_fd, t_childlist *child)
 	child->pid = fork();
 }
 
-/* parent_process():
-** 1) Since the child process inherits all the file descriptors,
-**    it no longer need to have it right after fork().
-** 2) file_fd[READ] is an exception.
-**    It should be passed on to the next child process and then closed.
-*/
 void	parent_process(int *file_fd, int *pipe_fd, t_childlist *child)
 {
 	close(file_fd[READ]);

@@ -1,11 +1,5 @@
 #include "pipex_bonus.h"
 
-/* child_process():
-** The child process has all the file descriptors(including pipe's fd)
-** of it's parent process at the time of fork.
-** Reset stdin to read from the previous pipe and stdout to write to the current pipe.
-** The process exits right after executing the command.
-*/
 void	child_process(int *file_fd, int *pipe_fd, t_childlist *child)
 {
 	reset_stdin(file_fd);
@@ -19,10 +13,6 @@ void	reset_stdin(int *file_fd)
 	close(file_fd[READ]);
 }
 
-/* reset_stdout():
-** The last process has no pipe to write on.
-** Instead, write to the [file2] we opened first.
-*/
 void	reset_stdout(int *file_fd, int *pipe_fd, t_childlist *child)
 {
 	if (child->next)
@@ -38,11 +28,6 @@ void	reset_stdout(int *file_fd, int *pipe_fd, t_childlist *child)
 	}
 }
 
-/* execve_command():
-** If there is an accessible path, run it. (the child process automatically exits.)
-** If not, display an error message on the terminal like this:
-** $> ls: command not found
-*/
 void	execve_command(t_childlist *lst)
 {
 	if (lst->full_path)

@@ -13,7 +13,7 @@ t_childlist	*get_childlist(int argc, char **argv, char **envp)
 	static t_childlist	*childlist;
 
 	paths = get_paths(envp);
-	i = 2 + is_heredoc(argv[1]);
+	i = 2;
 	while (i < (size_t)(argc - 1))
 	{
 		child = lstnew(argv[i], paths);

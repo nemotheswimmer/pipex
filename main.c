@@ -6,9 +6,9 @@
 ** $> ./pipex file1 cmd1 cmd2 file2
 ** and it behave exactly the same as the shell command below:
 ** $> <file1 cmd1 | cmd2 > outfile
+**
+** If there is no argc limit, it also can support multi-pipe.
 */
-
-/* You can found detailed comments in bonus files. */
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -17,7 +17,7 @@ int	main(int argc, char **argv, char **envp)
 	t_childlist	*childlist;
 	t_childlist	*child;
 
-	if (is_valid_argc(argc, argv))
+	if (argc == 5)
 	{
 		open_files(argc, argv, file_fd);
 		childlist = get_childlist(argc, argv, envp);
@@ -37,10 +37,6 @@ int	main(int argc, char **argv, char **envp)
 	return (0);
 }
 
-/* fork_process():
-** The child process will write the result to a pipe(a.k.a. pipe_fd[WRITE])
-** instead of displaying it to the terminal(a.k.a. fd 1).
-** That way the next child process can read instead of fd 0. */
 void	fork_process(int *pipe_fd, t_childlist *child)
 {
 	if (child->next)
@@ -48,12 +44,6 @@ void	fork_process(int *pipe_fd, t_childlist *child)
 	child->pid = fork();
 }
 
-/* parent_process():
-** 1) Since the child process inherits all the file descriptors,
-**    it no longer need to have it right after fork().
-** 2) file_fd[READ] is an exception.
-**    It should be passed on to the next child process and then closed.
-*/
 void	parent_process(int *file_fd, int *pipe_fd, t_childlist *child)
 {
 	close(file_fd[READ]);

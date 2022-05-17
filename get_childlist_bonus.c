@@ -1,10 +1,5 @@
 #include "pipex_bonus.h"
 
-/* get_childlist():
-** Returns a [childlist] filled with 2 members: [command], [full_path]. ([pid] is initialized to 0.)
-** [command] and [full_path] will be used in execve(),
-** [pid] will be used in waitpid().
-*/
 t_childlist	*get_childlist(int argc, char **argv, char **envp)
 {
 	size_t				i;
@@ -24,14 +19,6 @@ t_childlist	*get_childlist(int argc, char **argv, char **envp)
 	return (childlist);
 }
 
-/* get_paths():
-** The envp array store the environment variables.
-** 1) Get "PATHS enviroment variables" from [envp].
-** 2) Split it with delimeiter ':'.
-** 3) Add a slash(/) to each string.
-** result like this:
-** {"/usr/local/bin/", "/usr/bin/", "/bin/", "/usr/sbin/", "/sbin/"}
-*/
 char	**get_paths(char **envp)
 {
 	size_t	i;
@@ -58,12 +45,6 @@ char	**get_paths(char **envp)
 	return (paths);
 }
 
-/* lstnew():
-** Create a new node filled with 2 members.
-** like this:
-** new->command : {"ls", "-l", "-a"}
-** new->full_path : {"/bin/ls"}
-*/
 t_childlist	*lstnew(char *argvi, char **paths)
 {
 	t_childlist	*new;
@@ -74,11 +55,6 @@ t_childlist	*lstnew(char *argvi, char **paths)
 	return (new);
 }
 
-/* get_full_path():
-** Iterate through the [paths] array, until we finds an accessible path.
-** 1) Make a [full_path] temporarily.
-** 2) Check if it is an accessible path or not.
-*/
 char	*get_full_path(char *cmd, char **paths)
 {
 	size_t	i;
