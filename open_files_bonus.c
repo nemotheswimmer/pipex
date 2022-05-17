@@ -1,4 +1,11 @@
-#include "pipex.h"
+#include "pipex_bonus.h"
+
+/* open_files():
+** The actual shell opens all files at the first point.
+** The file to receive input is opened only when it exists,
+** and the file to be output is opened or newly created.
+** Heredoc reads from input instead of file.
+*/
 
 void	open_files(int argc, char **argv, int *file_fd)
 {
@@ -18,6 +25,11 @@ void	open_files(int argc, char **argv, int *file_fd)
 	}
 }
 
+/* get_stdin_newfd():
+** Heredoc reads from input and writes to the pipe.
+** Receive infinite input ending with newline, and write to the pipe.
+** When input is the same string as [limiter], child process is terminated.
+*/
 int	get_stdin_newfd(char *limiter)
 {
 	int		pipe_fd[2];

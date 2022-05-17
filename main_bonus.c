@@ -1,14 +1,31 @@
-#include "pipex.h"
+#include "pipex_bonus.h"
 
-/** Mandatory Part **/
+/** Bonus Part **/
 
 /* This program is executed as follows:
-** $> ./pipex file1 cmd1 cmd2 file2
+** ./pipex file1 cmd1 cmd2 file2
 ** and it behave exactly the same as the shell command below:
 ** $> <file1 cmd1 | cmd2 > outfile
+**
+** This program can handle multiple pipes:
+** $> < file1 cmd1 | cmd2 | cmd3 ... | cmdn > file2
+**
+** and support « and » when the first parameter is "here_doc".
+** This:
+** $> ./pipex here_doc LIMITER cmd cmd1 file
+** Behave like:
+** $> cmd << LIMITER | cmd1 >> file
 */
 
-/* You can found detailed comments in bonus files. */
+/* main():
+** 1) Check if they are valid arguments.
+** 2) Open [file1] and [file2] and save fd to [file_fd].
+** 3) Create a childlist. the number of "list nodes == [cmd]s == child processes".
+** 4) The parent creates pipes and child processes while traversing the [childlist].
+** 5) Each child process executes its own command and exits.
+** 6) The parent process waits for every child process to terminate,
+**    and then deallocates each node.
+*/
 
 int	main(int argc, char **argv, char **envp)
 {

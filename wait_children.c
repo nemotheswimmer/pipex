@@ -1,10 +1,5 @@
 #include "pipex.h"
 
-/* parent_wait_children():
-** 1) While iterate the [childlist],
-** 2) wait every child process in the order in the list
-** 3) and free the node.
-*/
 void	parent_wait_children(t_childlist *childlist)
 {
 	t_childlist	*child;
