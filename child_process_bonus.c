@@ -28,15 +28,15 @@ void	reset_stdout(int *file_fd, int *pipe_fd, t_childlist *child)
 	}
 }
 
-void	execve_command(t_childlist *lst)
+void	execve_command(t_childlist *child)
 {
-	if (lst->full_path)
+	if (child->full_path)
 	{
-		execve(lst->full_path, lst->command, NULL);
+		execve(child->full_path, child->command, NULL);
 	}
 	else
 	{
-		write(2, (lst->command)[0], ft_strlen((lst->command)[0]));
+		write(2, (child->command)[0], ft_strlen((child->command)[0]));
 		write(2, ": command not found\n", 21);
 		exit(EXIT_FAILURE);
 	}

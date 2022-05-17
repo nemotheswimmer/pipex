@@ -1,7 +1,8 @@
 #include "pipex.h"
 
 /* get_childlist():
-** Returns a [childlist] filled with 2 members: [command], [full_path]. ([pid] is initialized to 0.)
+** Returns a [childlist] filled with 2 members: [command], [full_path].
+** ([pid] is initialized to 0.)
 ** [command] and [full_path] will be used in execve(),
 ** [pid] will be used in waitpid().
 */

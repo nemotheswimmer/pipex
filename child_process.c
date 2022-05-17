@@ -1,9 +1,10 @@
 #include "pipex.h"
 
 /* child_process():
-** The child process has all the file descriptors(including pipe's fd)
+** The child process has all the fd. (including pipe's fd.)
 ** of it's parent process at the time of fork.
-** Reset stdin to read from the previous pipe and stdout to write to the current pipe.
+** Reset stdin to read from the previous pipe
+** and stdout to write to the current pipe.
 ** The process exits right after executing the command.
 */
 void	child_process(int *file_fd, int *pipe_fd, t_childlist *child)
@@ -39,19 +40,20 @@ void	reset_stdout(int *file_fd, int *pipe_fd, t_childlist *child)
 }
 
 /* execve_command():
-** If there is an accessible path, run it. (the child process automatically exits.)
+** If there is an accessible path, run it.
+** (The child process automatically exits.)
 ** If not, display an error message on the terminal like this:
 ** $> ls: command not found
 */
-void	execve_command(t_childlist *lst)
+void	execve_command(t_childlist *child)
 {
-	if (lst->full_path)
+	if (child->full_path)
 	{
-		execve(lst->full_path, lst->command, NULL);
+		execve(child->full_path, child->command, NULL);
 	}
 	else
 	{
-		write(2, (lst->command)[0], ft_strlen((lst->command)[0]));
+		write(2, (child->command)[0], ft_strlen((child->command)[0]));
 		write(2, ": command not found\n", 21);
 		exit(EXIT_FAILURE);
 	}
