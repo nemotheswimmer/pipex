@@ -8,12 +8,13 @@ RM			:= rm -f
 LIBFTDIR	:= ../libft
 
 SRCS	:= \
+		child_process.c \
+		execute_job.c \
+		get_childlist.c \
 		main.c \
 		open_files.c \
-		get_childlist.c \
-		child_process.c \
 		parent_wait_children.c \
-		utils.c
+		pipex_utils.c
 
 OBJS		= $(SRCS:.c=.o)
 
