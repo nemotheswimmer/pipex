@@ -82,7 +82,12 @@ char	*get_full_path(char *cmd, char **paths)
 
 void	lstadd_back(t_childlist **lst, t_childlist *new)
 {
-	while (*lst && (*lst)->next)
-		*lst = (*lst)->next;
-	*lst = new;
+	if (*lst == NULL)
+		*lst = new;
+	else
+	{
+		while ((*lst)->next)
+			(*lst) = (*lst)->next;
+		(*lst)->next = new;
+	}
 }
