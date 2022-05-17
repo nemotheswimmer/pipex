@@ -49,4 +49,4 @@ bonus:
 
 $(NAME):	$(OBJS)
 			make --directory=$(LIBFTDIR)
-			$(CC) $(CFLAGS) $(OBJS) $(LIBFTDIR)/libft.a -o $(NAME)
+			$(CC) $(CFLAGS) $^ $(LIBFTDIR)/libft.a -o $@
