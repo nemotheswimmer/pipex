@@ -11,16 +11,16 @@
 
 # define READ 0
 # define WRITE 1
+# define CHILD 0
 
 typedef struct s_childlist
 {
 	char				**command;
 	char				*full_path;
-	int					pid;
+	pid_t				pid;
 	struct s_childlist	*next;
 }	t_childlist;
 
-int			execute_job(int argc, char **argv, char **paths);
 void		open_files(int argc, char **argv, int *file_fd);
 int			get_stdin_newfd(char *limiter);
 t_childlist	*get_childlist(int argc, char **argv, char **envp);
