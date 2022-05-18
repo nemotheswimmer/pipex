@@ -2,29 +2,28 @@
 
 void	child_process(int *file_fd, int *pipe_fd, t_childlist *child)
 {
-	reset_stdin(file_fd);
-	reset_stdout(file_fd, pipe_fd, child);
+	dup2_needed_files(file_fd, pipe_fd, child);
+	close_all_files(file_fd, pipe_fd, child);
 	execve_command(child);
 }
 
-void	reset_stdin(int *file_fd)
+void	dup2_needed_files(int *file_fd, int *pipe_fd, t_childlist *child)
 {
 	dup2(file_fd[READ], STDIN_FILENO);
-	close(file_fd[READ]);
+	if (child->next)
+		dup2(pipe_fd[WRITE], STDOUT_FILENO);
+	else
+		dup2(file_fd[WRITE], STDOUT_FILENO);
 }
 
-void	reset_stdout(int *file_fd, int *pipe_fd, t_childlist *child)
+void	close_all_files(int *file_fd, int *pipe_fd, t_childlist *child)
 {
+	close(file_fd[READ]);
+	close(file_fd[WRITE]);
 	if (child->next)
 	{
 		close(pipe_fd[READ]);
-		dup2(pipe_fd[WRITE], STDOUT_FILENO);
 		close(pipe_fd[WRITE]);
-	}
-	else
-	{
-		dup2(file_fd[WRITE], STDOUT_FILENO);
-		close(file_fd[WRITE]);
 	}
 }
 
