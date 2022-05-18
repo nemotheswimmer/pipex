@@ -12,26 +12,12 @@ bool	is_heredoc(const char *argv1)
 }
 
 /* is_limiter():
-** line 23: The program pretends that [line] has no new line,
+** line 20: The program pretends that [line] has no new line,
 ** 			only to check if it is a [limiter].
 */
-bool	is_limiter(char *line, char *limiter)
+bool	is_limiter(const char *line, const char *limiter)
 {
-	size_t	n;
-	size_t	i;
-
-	n = ft_strlen(line) - 1;
-	i = 0;
-	while (i < n)
-	{
-		if (line[i] != limiter[i])
-			return (false);
-		else
-			i++;
-	}
-	if (limiter[i])
-		return (false);
-	return (true);
+	return (!ft_strncmp(line, limiter, ft_strlen(line) - 1));
 }
 
 void	free_twoarr(char **arr)

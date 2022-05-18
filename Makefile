@@ -5,7 +5,7 @@ CC			:= cc
 CFLAGS		:= -Wall -Wextra -Werror
 RM			:= rm -f
 
-LIBFTDIR	:= ./libft
+LIBFTDIR	:= ../libft
 
 SRCS	:= \
 				main.c \

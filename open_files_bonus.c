@@ -7,7 +7,7 @@ void	open_files(int argc, char **argv, int *file_fd)
 {
 	if (is_heredoc(argv[1]))
 	{
-		file_fd[READ] = get_stdin_newfd(argv[2]);
+		file_fd[READ] = read_stdin(argv[2]);
 		file_fd[WRITE] = open(argv[argc - 1],
 				O_WRONLY | O_CREAT | O_APPEND, 0644);
 	}
@@ -21,16 +21,17 @@ void	open_files(int argc, char **argv, int *file_fd)
 	}
 }
 
-/* get_stdin_newfd():
-** Heredoc reads from input and writes to the pipe.
-** line 40~43, 46~47: Receive infinite input ending with newline, and write to the pipe.
-** line 44~45: When input is the same string as [limiter], child process is terminated.
+/* read_stdin():
+** line 41~44: Receive infinite input ending with newline.
+** line 45~46: When input is the same string as [limiter],
+**				child process is terminated.
+** line 47~48: Until terminated, continue writing to the pipe.
 */
-int	get_stdin_newfd(char *limiter)
+int	read_stdin(const char *limiter)
 {
-	int		pipe_fd[2];
-	pid_t	pid;
-	char	*line;
+	int			pipe_fd[2];
+	pid_t		pid;
+	const char	*line;
 
 	pipe(pipe_fd);
 	pid = fork();
