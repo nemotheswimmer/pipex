@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex_bonus.h                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yehan <yehan@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/31 08:25:52 by yehan             #+#    #+#             */
+/*   Updated: 2022/05/31 08:26:04 by yehan            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PIPEX_BONUS_H
 # define PIPEX_BONUS_H
 
@@ -6,8 +18,8 @@
 # include <sys/wait.h>
 # include <stdbool.h>
 # include <stdio.h>
-# include "../libft/include/libft.h"
-# include "../libft/include/get_next_line.h"
+# include "./libft/include/libft.h"
+# include "./libft/include/get_next_line.h"
 
 # define READ 0
 # define WRITE 1

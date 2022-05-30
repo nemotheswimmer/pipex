@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   child_process.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yehan <yehan@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/31 08:22:07 by yehan             #+#    #+#             */
+/*   Updated: 2022/05/31 08:22:50 by yehan            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex.h"
 
 /* child_process():
 ** The child process has all the fd (including pipe's fd.)
 ** of it's parent process at the time of fork.
-** line 12: Change the action of stdin and stdout by duplication.
-** line 13: Close files since they are not in use or have already copied.
-** line 14: The process exits right after executing the command.
+** line 24: Change the action of stdin and stdout by duplication.
+** line 25: Close files since they are not in use or have already copied.
+** line 26: The process exits right after executing the command.
 */
 void	child_process(int *file_fd, int *pipe_fd, t_childlist *child)
 {
@@ -15,7 +27,7 @@ void	child_process(int *file_fd, int *pipe_fd, t_childlist *child)
 }
 
 /* dup2_needed_files():
-** line 26~27: The last process has no pipe to write on.
+** line 38~39: The last process has no pipe to write on.
 **  			Instead, write to the [file2] we opened first.
 */
 void	dup2_needed_files(int *file_fd, int *pipe_fd, t_childlist *child)
@@ -39,9 +51,9 @@ void	close_all_files(int *file_fd, int *pipe_fd, t_childlist *child)
 }
 
 /* execve_command():
-** line 50~53: If there is an accessible path, run it.
+** line 62~65: If there is an accessible path, run it.
 ** 				(The child process automatically exits.)
-** line 54~59: If not, display an error message on the terminal like this:
+** line 66~71: If not, display an error message on the terminal like this:
 ** 				$> ls: command not found
 */
 void	execve_command(t_childlist *child)

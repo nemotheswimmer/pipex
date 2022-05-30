@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yehan <yehan@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/31 08:26:02 by yehan             #+#    #+#             */
+/*   Updated: 2022/05/31 08:26:53 by yehan            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PIPEX_H
 # define PIPEX_H
 
@@ -5,7 +17,7 @@
 # include <unistd.h>
 # include <sys/wait.h>
 # include <stdio.h>
-# include "../libft/include/libft.h"
+# include "./libft/include/libft.h"
 
 # define READ 0
 # define WRITE 1

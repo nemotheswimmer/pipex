@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_childlist.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yehan <yehan@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/31 08:23:05 by yehan             #+#    #+#             */
+/*   Updated: 2022/05/31 08:23:50 by yehan            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex.h"
 
 /* get_childlist():
@@ -27,9 +39,9 @@ t_childlist	*get_childlist(int argc, char **argv, char **envp)
 
 /* get_paths():
 ** The envp array store the environment variables.
-** line 42~49: Get "PATHS enviroment variables" from [envp].
-** line 50: Split it with delimeiter ':'.
-** line 51~58: Add a slash(/) to each string.
+** line 54~61: Get "PATHS enviroment variables" from [envp].
+** line 62: Split it with delimeiter ':'.
+** line 63~70: Add a slash(/) to each string.
 ** result like this:
 ** {"/usr/local/bin/", "/usr/bin/", "/bin/", "/usr/sbin/", "/sbin/"}
 */
@@ -76,10 +88,10 @@ t_childlist	*lstnew(char *argvi, char **paths)
 }
 
 /* get_full_path():
-** line 89: Iterate through the [paths] array,
+** line 101: Iterate through the [paths] array,
 **  		until it finds an accessible path.
-** line 91: Make a [full_path] temporarily.
-** line 92: Check if it is an accessible path or not.
+** line 103: Make a [full_path] temporarily.
+** line 104: Check if it is an accessible path or not.
 */
 char	*get_full_path(char *cmd, char **paths)
 {
