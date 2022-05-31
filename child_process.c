@@ -6,7 +6,7 @@
 /*   By: yehan <yehan@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 08:22:07 by yehan             #+#    #+#             */
-/*   Updated: 2022/05/31 08:48:56 by yehan            ###   ########seoul.kr  */
+/*   Updated: 2022/05/31 09:45:43 by yehan            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,14 @@
 /* child_process():
 ** The child process has all the fd (including pipe's fd.)
 ** of it's parent process at the time of fork.
-** line 24: Change the action of stdin and stdout by duplication.
-** line 25: Close files since they are not in use or have already copied.
-** line 26: The process exits right after executing the command.
+** 1: Change the action of stdin and stdout by duplication.
+** 2: Close files since they are not in use or have already copied.
+** 3: The process exits right after executing the command.
 */
 void	child_process(int *file_fd, int *pipe_fd, t_childlist *child)
 {
+	if (file_fd[READ] == -1)
+		exit(EXIT_FAILURE);
 	dup2_needed_files(file_fd, pipe_fd, child);
 	close_all_files(file_fd, pipe_fd, child);
 	execve_command(child);
@@ -51,9 +53,9 @@ void	close_all_files(int *file_fd, int *pipe_fd, t_childlist *child)
 }
 
 /* execve_command():
-** line 62~65: If there is an accessible path, run it.
+** 1: If there is an accessible path, run it.
 ** 				(The child process automatically exits.)
-** line 66~71: If not, display an error message on the terminal like this:
+** 2: If not, display an error message on the terminal like this:
 ** 				$> ls: command not found
 */
 void	execve_command(t_childlist *child)

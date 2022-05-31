@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_process_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yehan <yehan@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yehan <yehan@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 08:44:29 by yehan             #+#    #+#             */
-/*   Updated: 2022/05/31 08:44:33 by yehan            ###   ########.fr       */
+/*   Updated: 2022/05/31 09:42:30 by yehan            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	child_process(int *file_fd, int *pipe_fd, t_childlist *child)
 {
+	if (file_fd[READ] == -1)
+		exit(EXIT_FAILURE);
 	dup2_needed_files(file_fd, pipe_fd, child);
 	close_all_files(file_fd, pipe_fd, child);
 	execve_command(child);
