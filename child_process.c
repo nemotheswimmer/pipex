@@ -6,7 +6,7 @@
 /*   By: yehan <yehan@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 08:22:07 by yehan             #+#    #+#             */
-/*   Updated: 2022/05/31 09:45:43 by yehan            ###   ########seoul.kr  */
+/*   Updated: 2022/05/31 11:51:10 by yehan            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,6 @@ void	execve_command(t_childlist *child)
 	{
 		write(2, (child->command)[0], ft_strlen((child->command)[0]));
 		write(2, ": command not found\n", 21);
-		exit(EXIT_FAILURE);
 	}
+	exit(EXIT_FAILURE);
 }
