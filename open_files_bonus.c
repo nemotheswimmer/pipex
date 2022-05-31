@@ -6,14 +6,14 @@
 /*   By: yehan <yehan@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 08:24:42 by yehan             #+#    #+#             */
-/*   Updated: 2022/05/31 08:48:51 by yehan            ###   ########seoul.kr  */
+/*   Updated: 2022/05/31 09:47:47 by yehan            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
 /* open_files():
-** line 22: Heredoc reads from input instead of file.
+** 1: Heredoc reads from input instead of file.
 */
 void	open_files(int argc, char **argv, int *file_fd)
 {
@@ -21,7 +21,7 @@ void	open_files(int argc, char **argv, int *file_fd)
 	{
 		file_fd[READ] = read_stdin(argv[2]);
 		file_fd[WRITE] = open(argv[argc - 1],
-				O_WRONLY | O_CREAT | O_APPEND, 0644);
+				O_WRONLY | O_APPEND | O_CREAT, 0644);
 	}
 	else
 	{
@@ -29,15 +29,15 @@ void	open_files(int argc, char **argv, int *file_fd)
 		if (file_fd[READ] == -1)
 			perror(argv[1]);
 		file_fd[WRITE] = open(argv[argc - 1],
-				O_WRONLY | O_CREAT, 0644);
+				O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	}
 }
 
 /* read_stdin():
-** line 53~56: Receive infinite input ending with newline.
-** line 57~58: When input is the same string as [limiter],
+** 1: Receive infinite input ending with newline.
+** 2: When input is the same string as [limiter],
 **				child process is terminated.
-** line 59~60: Until terminated, continue writing to the pipe.
+** 3: Until terminated, continue writing to the pipe.
 */
 int	read_stdin(const char *limiter)
 {
