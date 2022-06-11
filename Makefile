@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yehan <yehan@student.42seoul.kr>           +#+  +:+       +#+         #
+#    By: han-yeseul <han-yeseul@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/31 08:24:34 by yehan             #+#    #+#              #
-#    Updated: 2022/05/31 08:48:52 by yehan            ###   ########seoul.kr   #
+#    Updated: 2022/06/11 10:51:45 by han-yeseul       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,9 @@ CC			:= cc
 CFLAGS		:= -Wall -Wextra -Werror
 RM			:= rm -f
 
-LIBFTDIR	:= ./libft
+LIBFLAGS	:= -L./libft -lft
+
+FTDIR		:= ./libft
 
 SRCS	:= \
 				main.c \
@@ -42,17 +44,20 @@ ifdef BONUS
 	OBJS	= $(OBJS_BONUS)
 endif
 
-.PHONY:		all clean fclean re bonus
+.PHONY:		all clean fclean rclean re bonus
 
 all:		$(NAME)
 
 clean:
-			make clean --directory=$(LIBFTDIR)
+			make clean --directory=$(FTDIR)
 			$(RM) $(OBJS) $(OBJS_BONUS)
 
 fclean:		clean
-			make fclean --directory=$(LIBFTDIR)
+			make fclean --directory=$(FTDIR)
 			$(RM) $(NAME)
+
+rclean:		fclean
+			$(RM) infile outfile
 
 re:			fclean all
 
@@ -60,5 +65,5 @@ bonus:
 			make BONUS=true
 
 $(NAME):	$(OBJS)
-			make --directory=$(LIBFTDIR)
-			$(CC) $(CFLAGS) $^ $(LIBFTDIR)/libft.a -o $@
+			make --directory=$(FTDIR)
+			$(CC) $(CFLAGS) $(LIBFLAGS) $^ -o $@
