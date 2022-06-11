@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yehan <yehan@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: han-yeseul <han-yeseul@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 08:26:09 by yehan             #+#    #+#             */
-/*   Updated: 2022/05/31 08:48:46 by yehan            ###   ########seoul.kr  */
+/*   Updated: 2022/06/11 10:33:11 by han-yeseul       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,11 @@ bool	is_heredoc(const char *argv1)
 */
 bool	is_limiter(const char *line, const char *limiter)
 {
-	return (!ft_strncmp(line, limiter, ft_strlen(line) - 1));
+	if (ft_strlen(line) - 1 == ft_strlen(limiter)
+		&& !ft_strncmp(line, limiter, ft_strlen(limiter)))
+		return (true);
+	else
+		return (false);
 }
 
 void	free_twoarr(char **arr)
