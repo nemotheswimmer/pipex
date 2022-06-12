@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: han-yeseul <han-yeseul@student.42.fr>      +#+  +:+       +#+        */
+/*   By: yehan <yehan@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:29:33 by yehan             #+#    #+#             */
-/*   Updated: 2022/05/16 19:27:44 by han-yeseul       ###   ########.fr       */
+/*   Updated: 2022/06/13 07:53:56 by yehan            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,13 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
-	s_save = read_iter(&s_save, fd);
-	if (s_save == NULL)
+	s_save = read_iter(s_save, fd);
+	if (s_save == NULL || *s_save == '\0')
+	{
+		free(s_save);
+		s_save = NULL;
 		return (NULL);
+	}
 	line = get_line(s_save);
 	if (line == NULL)
 	{
@@ -29,13 +33,12 @@ char	*get_next_line(int fd)
 		s_save = NULL;
 		return (NULL);
 	}
-	s_save = set_remains(&s_save, ft_strlen(line));
-	if (s_save == NULL)
+	if (set_remains(&s_save, ft_strlen(line)) == false)
 		return (NULL);
 	return (line);
 }
 
-char	*read_iter(char **s_save, int fd)
+char	*read_iter(char *s_save, int fd)
 {
 	char		*buf;
 	ssize_t		nread;
@@ -44,13 +47,9 @@ char	*read_iter(char **s_save, int fd)
 
 	buf = malloc(BUFFER_SIZE + 1);
 	if (buf == NULL)
-	{
-		free(*s_save);
-		*s_save = NULL;
 		return (NULL);
-	}
 	nread = 0;
-	new = *s_save;
+	new = s_save;
 	while (new == NULL || !ft_strchr(new, '\n'))
 	{
 		nread = read(fd, buf, BUFFER_SIZE);
@@ -63,12 +62,8 @@ char	*read_iter(char **s_save, int fd)
 	}
 	free(buf);
 	buf = NULL;
-	if (nread < 0 || new == NULL || *new == '\0')
-	{
-		free(new);
-		new = NULL;
+	if (nread < 0)
 		return (NULL);
-	}
 	return (new);
 }
 
@@ -92,19 +87,20 @@ char	*get_line(char const *s_save)
 	return (line);
 }
 
-char	*set_remains(char **s_save, size_t offset)
+bool	set_remains(char **s_save, size_t offset)
 {
-	char	*new;
+	char	*temp;
 
-	new = malloc(ft_strlen(*s_save + offset) + 1);
-	if (new == NULL)
+	temp = *s_save;
+	*s_save = malloc(ft_strlen(temp + offset) + 1);
+	if (*s_save == NULL)
 	{
-		free(*s_save);
-		*s_save = NULL;
-		return (NULL);
+		free(temp);
+		temp = NULL;
+		return (false);
 	}
-	ft_strlcpy(new, *s_save + offset, ft_strlen(*s_save + offset) + 1);
-	free(*s_save);
-	*s_save = NULL;
-	return (new);
+	ft_strlcpy(*s_save, temp + offset, ft_strlen(temp + offset) + 1);
+	free(temp);
+	temp = NULL;
+	return (true);
 }
