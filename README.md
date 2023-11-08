@@ -1,4 +1,4 @@
-## Description
+# pipex
 UNIX shell의 pipe, redirection, heredoc의 동작을 구현한 프로그램입니다. 시스템 함수를 사용하여 UNIX shell의 내부 동작 원리와 동일한 방식으로 동작합니다.
 
 ## Update
