@@ -23,4 +23,4 @@ UNIX shell의 pipe, redirection, heredoc의 동작을 구현한 프로그램입�
 <img width="533" alt="image" src="https://github.com/nemotheswimmer/pipex/assets/88709878/d557fd4a-bf80-41e5-9e04-13b9894d8e45">
 
 ## Notion Post
-코드에 대한 자세한 설명을 [pipex에 대한 노트](https://probable-perch-892.notion.site/pipex-c012703b380145f48b075ab0becf9124?pvs=4)에 작성했으니 참고해주세요.
+코드에 대한 자세한 설명은 [pipex에 대한 노트](https://probable-perch-892.notion.site/pipex-c012703b380145f48b075ab0becf9124?pvs=4)에 있습니다.
